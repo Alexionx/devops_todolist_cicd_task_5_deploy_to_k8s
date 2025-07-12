@@ -6,6 +6,12 @@ on:
       environment:
         required: true
         type: string
+      helm-values-path:
+        required: true
+        type: string
+      helm-release-name:
+        required: true
+        type: string
 
 jobs:
   deploy-to-kind:
@@ -33,7 +39,7 @@ jobs:
           helm install todoapp ./helm-charts/todoapp \
             --namespace ${{ inputs.environment }} \
             --create-namespace \
-            --values helm-charts/todoapp/values/${{ inputs.environment }}.yaml \
+            --values ${{ inputs.helm-values-path }} \
             --dry-run
 
       - name: Deploy with Helm (atomic)
@@ -41,5 +47,5 @@ jobs:
           helm upgrade --install todoapp ./helm-charts/todoapp \
             --namespace ${{ inputs.environment }} \
             --create-namespace \
-            --values helm-charts/todoapp/values/${{ inputs.environment }}.yaml \
+            --values ${{ inputs.helm-values-path }} \
             --atomic
