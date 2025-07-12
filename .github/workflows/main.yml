@@ -10,7 +10,7 @@ on:
 
 env:
   PythonVersion: 3.8
-  DockerImageName: todoapp
+  DockerImageName: alexkaie/todoapp
 
 jobs:
   python-ci:
@@ -118,3 +118,15 @@ jobs:
       with:
         name: helm-package
         path: ./*.tgz
+
+  deploy-dev:
+    uses: ./.github/workflows/deploy-kind.yml
+    needs: helm-ci
+    with:
+      environment: dev
+
+  deploy-stg:
+    uses: ./.github/workflows/deploy-kind.yml
+    needs: helm-ci
+    with:
+      environment: stg
