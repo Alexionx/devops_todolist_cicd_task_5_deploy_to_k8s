@@ -120,13 +120,13 @@ jobs:
         path: ./*.tgz
 
   deploy-dev:
-    uses: ./.github/workflows/deploy-kind.yml
+    uses: ./.github/workflows/deploy_cluster.yml
     needs: helm-ci
     with:
       environment: dev
 
   deploy-stg:
-    uses: ./.github/workflows/deploy-kind.yml
+    uses: ./.github/workflows/deploy_cluster.yml
     needs: helm-ci
     with:
       environment: stg
